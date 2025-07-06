@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class BrandController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BrandDto> createBrand(@RequestBody @Valid CreateBrandRequest request){
 
         log.info("Creating new brand with request: {}", request);
@@ -51,6 +53,7 @@ public class BrandController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<BrandDto> updateBrand(@RequestBody @Valid UpdateBrandRequest request,
                                                 @PathVariable String id){
         log.info("Updating brand with ID: {} using request: {}", id, request);
@@ -61,6 +64,7 @@ public class BrandController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteBrand(@PathVariable String id){
 
         log.info("Deleting brand with ID: {}", id);
